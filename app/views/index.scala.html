@@ -1,6 +1,8 @@
-@()(implicit flash: Flash)
+@(profile : org.pac4j.core.profile.CommonProfile, urlFacebook: String)(implicit flash: Flash)
 
 @main(None) {
+    
+    <a href="@urlFacebook">Authenticate with Facebook</a><br />
     
     @flash.get("error").map { errorMessage =>
         

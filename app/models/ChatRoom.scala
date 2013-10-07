@@ -23,7 +23,7 @@ object Robot {
     
     implicit val timeout = Timeout(1 second)
     // Make the robot join the room
-    chatRoom ? (Join("Robot")) map {
+    chatRoom ? (Join("ScalaBot")) map {
       case Connected(robotChannel) => 
         // Apply this Enumerator on the logger.
         robotChannel |>> loggerIteratee
@@ -34,7 +34,7 @@ object Robot {
       30 seconds,
       30 seconds,
       chatRoom,
-      Talk("Robot", "I'm still alive")
+      Talk("ScalaBot", "Scala Programming is Fun!!")
     )
   }
   

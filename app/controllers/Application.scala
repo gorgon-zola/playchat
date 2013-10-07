@@ -2,61 +2,48 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import play.api.data._
-import play.api.data.Forms._
 
-import views._
+import play.api.libs.json._
+import play.api.libs.iteratee._
 
-import play.api.db._
-import play.api.Play.current
- 
-import anorm._
-import anorm.SqlParser._ 
+import models._
 
+import akka.actor._
+import scala.concurrent.duration._
 
 object Application extends Controller {
-
+  
   /**
-   * Describes the hello form.
-   */
-  val helloForm = Form(
-    tuple(
-      "name" -> nonEmptyText,
-      "repeat" -> number(min = 1, max = 100),
-      "color" -> optional(text)
-    )
-  )
-
-  val result = false
-
-  // -- Actions
-
-  /**
-   * Home page
+   * Just display the home page.
    */
   def index = Action { implicit request =>
-  DB.withConnection { implicit c =>
-
-    val result: Boolean = SQL("Select 1").execute()    
-    println("Datasource result: " + result)
-    Ok(html.index(helloForm))  
+    Ok(views.html.index())
   }
-  }
-
+  
   /**
-   * Handles the form submission.
+   * Display the chat room page.
    */
-  def sayHello = Action { implicit request =>
+  def chatRoom(username: Option[String]) = Action { implicit request =>
+    username.filterNot(_.isEmpty).map { username =>
+      Ok(views.html.chatRoom(username))
+    }.getOrElse {
+      Redirect(routes.Application.index).flashing(
+        "error" -> "Please choose a valid username."
+      )
+    }
+  }
 
-  helloForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.index(formWithErrors)),
-      {case (name, repeat, color) => Ok(html.hello(name, repeat.toInt, color))}
-    )
+  def chatRoomJs(username: String) = Action { implicit request =>
+    Ok(views.js.chatRoom(username))
   }
   
- 
- 
-  
-  
+  /**
+   * Handles the chat websocket.
+   */
+  def chat(username: String) = WebSocket.async[JsValue] { request  =>
+
+    ChatRoom.join(username)
+    
+  }
   
 }

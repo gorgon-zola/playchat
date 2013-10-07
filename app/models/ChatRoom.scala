@@ -2,7 +2,6 @@ package models
 
 import akka.actor._
 import scala.concurrent.duration._
-import scala.language.postfixOps
 
 import play.api._
 import play.api.libs.json._
@@ -63,7 +62,7 @@ object ChatRoom {
         // Create an Iteratee to consume the feed
         val iteratee = Iteratee.foreach[JsValue] { event =>
           default ! Talk(username, (event \ "text").as[String])
-        }.map { _ =>
+        }.mapDone { _ =>
           default ! Quit(username)
         }
 

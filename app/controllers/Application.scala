@@ -32,18 +32,11 @@ object Application extends Controller {
       )
     }
   }
-
-  def chatRoomJs(username: String) = Action { implicit request =>
-    Ok(views.js.chatRoom(username))
-  }
   
   /**
    * Handles the chat websocket.
    */
   def chat(username: String) = WebSocket.async[JsValue] { request  =>
-
     ChatRoom.join(username)
-    
   }
-  
 }

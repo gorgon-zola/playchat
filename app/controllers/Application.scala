@@ -25,7 +25,7 @@ object Application extends ScalaController {
    */
   def index = Action { implicit request =>
     val newSession = getOrCreateSessionId(request)
-    val urlFacebook = getRedirectionUrl(request, newSession, "FacebookClient", "/?0")
+    val urlFacebook = getRedirectionUrl(request, newSession, "FacebookClient", "/room")
     val profile = getUserProfile(request)
     Ok(views.html.index(profile, urlFacebook)).withSession(newSession)
   }

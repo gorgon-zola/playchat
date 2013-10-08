@@ -38,7 +38,7 @@ object Application extends ScalaController {
      println("test" + profile)
      
     username.filterNot(_.isEmpty).map { username =>
-      Ok(views.html.chatRoom(username))
+      Ok(views.html.chatRoom(profile.getDisplayName()))
     }.getOrElse {
       Redirect(routes.Application.index).flashing(
         "error" -> "Please choose a valid username.")

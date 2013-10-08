@@ -20,6 +20,8 @@ object Global extends GlobalSettings {
   }
 
   override def onStart(app: Application) {
+    val hostName = Play.current.configuration.getString("application.baseUrl").getOrElse("invalid")// current ("application.baseUrl")
+    
     Config.setErrorPage401(views.html.error401.render().toString())
     Config.setErrorPage403(views.html.error403.render().toString())
         
@@ -32,19 +34,20 @@ object Global extends GlobalSettings {
     val twitterClient = new TwitterClient("HVSQGAw2XmiwcKOTvZFbQ", "FSiO9G9VRR4KCuksky0kgGuo8gAVndYymr4Nl7qc8AA")
     
     // HTTP
-    val formClient = new FormClient("http://localhost:9000/theForm", new SimpleTestUsernamePasswordAuthenticator())
+    val formClient = new FormClient("http://"+hostName+"/theForm", new SimpleTestUsernamePasswordAuthenticator())
     val basicAuthClient = new BasicAuthClient(new SimpleTestUsernamePasswordAuthenticator())
         
     // CAS
     val casClient = new CasClient()
     //casClient.setGateway(true)
     //casClient.setLogoutHandler(new PlayLogoutHandler())
-    casClient.setCasLoginUrl("http://localhost:8080/cas/login")
+    casClient.setCasLoginUrl("http://"+hostName+"/cas/login")
 
 	// OpenID
 	val myOpenIdClient = new MyOpenIdClient()
-
-    val clients = new Clients("http://playchat.gorgon-zola.cloudbees.net/callback", facebookClient, twitterClient, formClient, basicAuthClient, casClient, myOpenIdClient)
+    
+    
+    val clients = new Clients("http://"+hostName+"/callback", facebookClient, twitterClient, formClient, basicAuthClient, casClient, myOpenIdClient)
     Config.setClients(clients)
     // for test purposes : profile timeout = 60 seconds
     // Config.setProfileTimeout(60)

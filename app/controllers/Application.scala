@@ -34,15 +34,18 @@ object Application extends ScalaController {
    * Display the chat room page.
    */
   def chatRoom(username: Option[String]) = Action { implicit request =>
+    def toOption[String](v: String): Option[String] = if(v == null) None else Some(v)
+    
      val profile = getUserProfile(request)
      println("test" + profile)
-     
-    username.filterNot(_.isEmpty).map { username =>
+     val som: Option[String] = Some(profile.getDisplayName())
+     val uname = username.getOrElse(som)
       Ok(views.html.chatRoom(profile.getDisplayName()))
-    }.getOrElse {
-      Redirect(routes.Application.index).flashing(
-        "error" -> "Please choose a valid username.")
-    }
+      
+//    }.getOrElse {
+//      Redirect(routes.Application.index).flashing(
+//        "error" -> "Please choose a valid username.")
+//    }
   }
 
   /**

@@ -1,6 +1,7 @@
 import sbt._
 import Keys._
 import play.Project._
+import com.typesafe.sbteclipse.plugin.EclipsePlugin.EclipseKeys
 
 object ApplicationBuild extends Build {
 
@@ -22,4 +23,6 @@ object ApplicationBuild extends Build {
       testOptions in Test += Tests.Argument("junitxml", "console"),
       resolvers += "Sonatype snapshots repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
     )
+
+  EclipseKeys.withSource := true
 }

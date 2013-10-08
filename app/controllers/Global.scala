@@ -26,6 +26,7 @@ object Global extends GlobalSettings {
     Config.setErrorPage401(views.html.error401.render().toString())
     Config.setErrorPage403(views.html.error403.render().toString())
     Config.setDefaultSuccessUrl("http://"+hostName+"/room")
+    Config.setDefaultLogoutUrl("http://"+hostName)
         
     // OAuth
     val facebookClient = new FacebookClient("636317399733107", "1ebbeda616516c18b846d383ef56e321")

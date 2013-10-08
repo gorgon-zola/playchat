@@ -10,7 +10,6 @@ import org.pac4j.http.client._
 import org.pac4j.openid.client._
 import org.pac4j.http.credentials._
 import play.api.mvc.Results._
-import org.pac4j.oauth.client.Google2Scope
 import org.pac4j.oauth.client.Google2Client.Google2Scope
 
 object Global extends GlobalSettings {

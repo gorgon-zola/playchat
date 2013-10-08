@@ -10,10 +10,6 @@ GET     /room/chat                  controllers.Application.chat(username)
 GET   /callback               org.pac4j.play.CallbackController.callback()
 POST  /callback               org.pac4j.play.CallbackController.callback()
 
-# for google oauth2
-GET   /oauth2callback         org.pac4j.play.CallbackController.callback()
-POST  /oauth2callback         org.pac4j.play.CallbackController.callback()
-
 GET   /logout                 org.pac4j.play.CallbackController.logoutAndRedirect()
 
 # Map static resources from the /public folder to the /assets URL path

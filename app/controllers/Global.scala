@@ -10,6 +10,8 @@ import org.pac4j.http.client._
 import org.pac4j.openid.client._
 import org.pac4j.http.credentials._
 import play.api.mvc.Results._
+import org.pac4j.oauth.client.Google2Scope
+import org.pac4j.oauth.client.Google2Client.Google2Scope
 
 object Global extends GlobalSettings {
 
@@ -28,10 +30,11 @@ object Global extends GlobalSettings {
         
     // OAuth
     val facebookClient = new FacebookClient("636317399733107", "1ebbeda616516c18b846d383ef56e321")
-    val googleClient = new Google2Client("611064916903.apps.googleusercontent.com", "VM-HK4WfJVMVysldOF4mMgRn")
-    
     // DEFAULT_SCOPE =  "user_likes,user_about_me,user_birthday,user_education_history,email,user_hometown,user_relationship_details,user_location,user_religion_politics,user_relationships,user_website,user_work_history";
     facebookClient.setScope("user_about_me,publish_actions")
+
+    val googleClient = new Google2Client("611064916903.apps.googleusercontent.com", "VM-HK4WfJVMVysldOF4mMgRn")
+    googleClient.setScope(Google2Scope.PROFILE)
         
     val twitterClient = new TwitterClient("HVSQGAw2XmiwcKOTvZFbQ", "FSiO9G9VRR4KCuksky0kgGuo8gAVndYymr4Nl7qc8AA")
     

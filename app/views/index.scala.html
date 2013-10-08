@@ -1,9 +1,10 @@
-@(profile : org.pac4j.core.profile.CommonProfile, urlFacebook: String, urlGoogle: String)(implicit flash: Flash)
+@(profile : org.pac4j.core.profile.CommonProfile, urlFacebook: String, urlGoogle: String, last: List[Board])(implicit flash: Flash)
 
 @main(None) {
     
     <a href="@urlFacebook">Authenticate with Facebook</a><br />
     <a href="@urlGoogle">Authenticate with Google</a><br />
+
     
     @flash.get("error").map { errorMessage =>
         
@@ -22,4 +23,18 @@
         </p>
     </div>
     
+    <style type="text/css">
+		span.name { width: 70px; font-weight: bolder; display: inline-block; }
+		span.comment { } 
+		</style>
+    <div class="board">
+			<ul>
+				@for(board <- last) {
+  				<li>
+						<span class="name">@board.name</span>
+						<span class="comment">@board.comment</span>
+					</li>
+				}
+			</ul>
+		</div>
 }

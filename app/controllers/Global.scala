@@ -35,6 +35,7 @@ object Global extends GlobalSettings {
 
     val googleClient = new Google2Client("611064916903.apps.googleusercontent.com", "VM-HK4WfJVMVysldOF4mMgRn")
     googleClient.setScope(Google2Scope.PROFILE)
+    googleClient.setReadTimeout(5000)	// 5 seconds
         
     val twitterClient = new TwitterClient("HVSQGAw2XmiwcKOTvZFbQ", "FSiO9G9VRR4KCuksky0kgGuo8gAVndYymr4Nl7qc8AA")
     

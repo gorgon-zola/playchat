@@ -38,14 +38,14 @@ object Application extends ScalaController {
     
      val profile = getUserProfile(request)
      println("test" + profile)
-     val som: Option[String] = Some(profile.getDisplayName())
-     val uname = username.getOrElse(som)
-      Ok(views.html.chatRoom(profile.getDisplayName()))
-      
-//    }.getOrElse {
-//      Redirect(routes.Application.index).flashing(
-//        "error" -> "Please choose a valid username.")
-//    }
+     val som: String = Option(profile.getDisplayName()).getOrElse(username.get)
+     
+    Option(som).filterNot(_.isEmpty).map { username =>
+      Ok(views.html.chatRoom(username))
+    }.getOrElse {
+      Redirect(routes.Application.index).flashing(
+        "error" -> "Please choose a valid username.")
+    }
   }
 
   /**
